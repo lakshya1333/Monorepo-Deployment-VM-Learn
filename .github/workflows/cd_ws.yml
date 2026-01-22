@@ -22,9 +22,3 @@ jobs:
           file: ./docker/Dockerfile.ws
           push: true
           tags: shinsuke1/todo-app-websocket:${{ github.sha }}
-
-      - name: Deploy to the VM
-        run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
-          chmod 700 /home/runner/ssh_key
-          ssh -o StrictHostKeyChecking=no -i ~/ssh_key azureuser@20.193.252.78 -t "docker stop user_backend && docker run --name user_backend -d -p 8080:8080 shinsuke1/todo-app-backend:${{ github.sha }}"
